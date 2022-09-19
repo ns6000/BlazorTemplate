@@ -2361,11 +2361,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "f:\\xxx\\zip\\BlazorTemplate\\Server\\BlazorTemplate.Server.csproj",
+      "projectUniqueName": "F:\\xxx\\zip\\BlazorTemplate\\Server\\BlazorTemplate.Server.csproj",
       "projectName": "BlazorTemplate.Server",
-      "projectPath": "f:\\xxx\\zip\\BlazorTemplate\\Server\\BlazorTemplate.Server.csproj",
+      "projectPath": "F:\\xxx\\zip\\BlazorTemplate\\Server\\BlazorTemplate.Server.csproj",
       "packagesPath": "C:\\Users\\NonSuch\\.nuget\\packages\\",
-      "outputPath": "f:\\xxx\\zip\\BlazorTemplate\\Server\\obj\\",
+      "outputPath": "F:\\xxx\\zip\\BlazorTemplate\\Server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\NonSuch\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -2380,11 +2380,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "f:\\xxx\\zip\\BlazorTemplate\\Client\\BlazorTemplate.Client.csproj": {
-              "projectPath": "f:\\xxx\\zip\\BlazorTemplate\\Client\\BlazorTemplate.Client.csproj"
+            "F:\\xxx\\zip\\BlazorTemplate\\Client\\BlazorTemplate.Client.csproj": {
+              "projectPath": "F:\\xxx\\zip\\BlazorTemplate\\Client\\BlazorTemplate.Client.csproj"
             },
-            "f:\\xxx\\zip\\BlazorTemplate\\Shared\\BlazorTemplate.Shared.csproj": {
-              "projectPath": "f:\\xxx\\zip\\BlazorTemplate\\Shared\\BlazorTemplate.Shared.csproj"
+            "F:\\xxx\\zip\\BlazorTemplate\\Shared\\BlazorTemplate.Shared.csproj": {
+              "projectPath": "F:\\xxx\\zip\\BlazorTemplate\\Shared\\BlazorTemplate.Shared.csproj"
             }
           }
         }

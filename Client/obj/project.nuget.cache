@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "n1yaJRQFQ+skNHvO/G7WoLMXSAk7g5VbihshAmagdvj0f/iWP9RA9dgA2prkWzn/mum6ihk7sbXU48xK1Gqlng==",
+  "dgSpecHash": "RZztgL2S64Myi1OxOeJv51iNuahIjgzZlv9I2Kv9gWsSyb0xJxPrIAEr4pfsb9UlnItenrw4BHNXNeXexo8Gyw==",
   "success": true,
-  "projectFilePath": "f:\\xxx\\zip\\BlazorTemplate\\Client\\BlazorTemplate.Client.csproj",
+  "projectFilePath": "F:\\xxx\\zip\\BlazorTemplate\\Client\\BlazorTemplate.Client.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\NonSuch\\.nuget\\packages\\fluentvalidation\\11.2.2\\fluentvalidation.11.2.2.nupkg.sha512",
     "C:\\Users\\NonSuch\\.nuget\\packages\\libsassbuilder\\2.0.2\\libsassbuilder.2.0.2.nupkg.sha512",

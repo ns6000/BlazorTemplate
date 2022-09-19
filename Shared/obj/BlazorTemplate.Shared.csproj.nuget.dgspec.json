@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "f:\\xxx\\zip\\BlazorTemplate\\Shared\\BlazorTemplate.Shared.csproj": {}
+    "F:\\xxx\\zip\\BlazorTemplate\\Shared\\BlazorTemplate.Shared.csproj": {}
   },
   "projects": {
-    "f:\\xxx\\zip\\BlazorTemplate\\Shared\\BlazorTemplate.Shared.csproj": {
+    "F:\\xxx\\zip\\BlazorTemplate\\Shared\\BlazorTemplate.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "f:\\xxx\\zip\\BlazorTemplate\\Shared\\BlazorTemplate.Shared.csproj",
+        "projectUniqueName": "F:\\xxx\\zip\\BlazorTemplate\\Shared\\BlazorTemplate.Shared.csproj",
         "projectName": "BlazorTemplate.Shared",
-        "projectPath": "f:\\xxx\\zip\\BlazorTemplate\\Shared\\BlazorTemplate.Shared.csproj",
+        "projectPath": "F:\\xxx\\zip\\BlazorTemplate\\Shared\\BlazorTemplate.Shared.csproj",
         "packagesPath": "C:\\Users\\NonSuch\\.nuget\\packages\\",
-        "outputPath": "f:\\xxx\\zip\\BlazorTemplate\\Shared\\obj\\",
+        "outputPath": "F:\\xxx\\zip\\BlazorTemplate\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\NonSuch\\AppData\\Roaming\\NuGet\\NuGet.Config"
