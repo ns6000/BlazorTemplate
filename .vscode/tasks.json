@@ -1,0 +1,45 @@
+{
+	"version":	"2.0.0",
+	"tasks":	[
+		{
+			"label":			"build",
+			"command":			"dotnet",
+			"type":				"process",
+			"problemMatcher":	"$msCompile",
+			"args":				[
+				"build",
+				"${workspaceFolder}/BlazorTemplate.sln",
+				"/property:GenerateFullPaths=true",
+				"/consoleloggerparameters:NoSummary"
+			],
+			"presentation":		{
+				"reveal":	"always",
+				"focus":	true
+			}
+		},
+		{
+			"label":			"watch",
+			"command":			"dotnet",
+			"type":				"process",
+			"problemMatcher":	"$msCompile",
+			"args":				[
+				"watch",
+				"run",
+				"--project",
+				"${workspaceFolder}/BlazorTemplate.sln"
+			]
+		},
+		{
+			"label":			"publish",
+			"command":			"dotnet",
+			"type":				"process",
+			"problemMatcher":	"$msCompile",
+			"args":				[
+				"publish",
+				"${workspaceFolder}/BlazorTemplate.sln",
+				"/property:GenerateFullPaths=true",
+				"/consoleloggerparameters:NoSummary"
+			]
+		}
+	]
+}

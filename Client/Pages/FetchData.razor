@@ -1,0 +1,64 @@
+﻿@page "/fetchdata"
+@inject HttpClient Http
+
+<PageTitle>Weather forecast</PageTitle>
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private WeatherForecast[]? forecasts = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+
+		(string login, string password) = ("test", "Xxxxx123!");
+
+		HttpResponseMessage response = await Http.PostAsJsonAsync<RegistrationRequest>(Routes.Identity.Register, new RegistrationRequest {
+			Login					= login,
+			Password				= password,
+			PasswordVerification	= password,
+			Email					= "test@test.org"
+		});
+
+		List<string>? registrationResponse = await response.Content.ReadFromJsonAsync<List<string>>();
+
+		response = await Http.PostAsJsonAsync<LoginRequest>(Routes.Identity.Login, new RegistrationRequest {
+			Login					= login,
+			Password				= password
+		});
+
+		LoginResponse? loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>();
+    }
+}

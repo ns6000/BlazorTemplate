@@ -1,0 +1,11 @@
+$testWidth: 10px;
+$testHeight: 20px;
+
+.test {
+	width: $testWidth;
+}
+
+.tst {
+	@extend .test;
+	height: $testHeight;
+}

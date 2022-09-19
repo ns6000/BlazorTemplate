@@ -1,0 +1,49 @@
+// https://dev.to/sacantrell/vs-code-and-blazor-wasm-debug-with-hot-reload-5317
+{
+	"version":			"0.2.0",
+	"configurations":	[
+		{
+			"name":				"Debug Only",
+			"type":				"blazorwasm",
+			"request":			"launch",
+			"browser":			"edge",
+			"hosted":			true,
+			"preLaunchTask":	"build",
+			"cwd":				"${workspaceFolder}",
+			"program":			"${workspaceFolder}/Server/bin/Debug/net6.0/BlazorTemplate.Server.dll",
+			"url":				"http://localhost:5000"
+		},
+		{
+			"name":				"Watch",
+			"program":			"dotnet",
+			"request":			"launch",
+			"type":				"coreclr",
+			"preLaunchTask":	"build",						// Ensure we don't watch an unbuilt site
+			"cwd":				"${workspaceFolder}/Server",
+			"args":				[
+				"watch",
+				"--project",
+				".",
+				"--verbose"										// Let's us confirm browser connects with hot reload capabilities
+			]
+		},
+		{
+			"name":				"Attach",
+			"type":				"blazorwasm",
+			"request":			"attach",
+			"browser":			"edge",
+			"cwd":				"${workspaceFolder}/Server",
+			"url":				"http://localhost:5000",		// Tell launch where to find site
+			"timeout":			120000							// Allows time for the site to launch
+		}
+	],
+	"compounds":		[
+		{
+			"name":				"Debug with Hot Reload",
+			"configurations":	[
+				"Watch",
+				"Attach"
+			]
+		}
+	]
+}

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "TTM4eX800QIAOsPNwNvAmdwEuUfCvkPtmMgMfjT+uehUX34MSzmEPkVO0x/DeZZh7ZNKdE/hPV4xTXl6hotjfg==",
+  "success": true,
+  "projectFilePath": "f:\\xxx\\zip\\BlazorTemplate\\Shared\\BlazorTemplate.Shared.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\NonSuch\\.nuget\\packages\\fluentvalidation\\11.2.2\\fluentvalidation.11.2.2.nupkg.sha512"
+  ],
+  "logs": []
+}
