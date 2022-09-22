@@ -22,16 +22,16 @@ public class LoginRequestValidator<T> : AbstractValidator<T> where T : LoginRequ
 
 public class LoginResponse
 {
-	public bool IsSuccessful				{ get; set; }
-	public string? Token					{ get; set; }
+	public bool Success						{ get; set; }
 	public string[] Errors					{ get; set; } = Array.Empty<string>();
+	public string? Token					{ get; set; }
 }
 
 
 
 public class RegistrationRequest : LoginRequest
 {
-	public string? PasswordVerification		{ get; set; }
+	public string? PasswordVerify			{ get; set; }
 	public string? Email					{ get; set; }
 }
 
@@ -39,9 +39,9 @@ public class RegistrationRequestValidator : LoginRequestValidator<RegistrationRe
 {
 	public RegistrationRequestValidator()
 	{
-		RuleFor(x => x.PasswordVerification)
+		RuleFor(x => x.PasswordVerify)
 			.NotEmpty()
-			.Equal(x => x.Password);
+			.Equal(x => x.Password).WithMessage($"Value of {nameof(RegistrationRequest.PasswordVerify)} must be equal to the value of {nameof(LoginRequest.Password)}");
 		RuleFor(x => x.Email)
 			.NotEmpty();
 	}

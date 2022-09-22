@@ -19,14 +19,16 @@
 	<body>
 		<div id="app">
 			<div class="d-flex flex-column justify-content-center align-items-center min-vh-100">
-				<div class="card w-50">
+				<div class="card w-25">
 					<div class="card-body">
-						<h5 class="card-title">Loading...</h5>
-						<div class="progress" role="progressbar">
+						<div class="card-title fw-bolder">
+							Loading...
+						</div>
+						<div class="progress my-1" role="progressbar" style="height: 4px;">
 							<div id="progressBar" class="progress-bar" style="width: 10%;"></div>
 						</div>
-						<div class="mt-1">
-							<span id="progressLabel" class="text-muted">Starting from cache</span>
+						<div id="progressLabel" class="text-muted text-truncate small">
+							Starting from cache
 						</div>
 					</div>
 				</div>

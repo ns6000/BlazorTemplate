@@ -9,56 +9,63 @@
 
 @if (forecasts == null)
 {
-    <p><em>Loading...</em></p>
+	<p><em>Loading...</em></p>
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Temp. (C)</th>
+				<th>Temp. (F)</th>
+				<th>Summary</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var forecast in forecasts)
+			{
+				<tr>
+					<td>@forecast.Date.ToShortDateString()</td>
+					<td>@forecast.TemperatureC</td>
+					<td>@forecast.TemperatureF</td>
+					<td>@forecast.Summary</td>
+				</tr>
+			}
+		</tbody>
+	</table>
 }
 
+
 @code {
-    private WeatherForecast[]? forecasts = null;
+	private WeatherForecast[]? forecasts = null;
 
-    protected override async Task OnInitializedAsync()
-    {
-        //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
-
-		(string login, string password) = ("test", "Xxxxx123!");
-
-		HttpResponseMessage response = await Http.PostAsJsonAsync<RegistrationRequest>(Routes.Identity.Register, new RegistrationRequest {
-			Login					= login,
-			Password				= password,
-			PasswordVerification	= password,
-			Email					= "test@test.org"
+	protected override async Task OnInitializedAsync()
+	{
+		HttpResponseMessage loginResponse = await Http.PostAsJsonAsync<LoginRequest>(Routes.Identity.Login, new RegistrationRequest {
+			Login		= "test",
+			Password	= "Xxxxx123!"
 		});
 
-		List<string>? registrationResponse = await response.Content.ReadFromJsonAsync<List<string>>();
+		Http.DefaultRequestHeaders.Authorization = new("Bearer", await loginResponse.Content.ReadAsStringAsync());
+		forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
 
-		response = await Http.PostAsJsonAsync<LoginRequest>(Routes.Identity.Login, new RegistrationRequest {
-			Login					= login,
-			Password				= password
-		});
+		//(string login, string password) = ("test", "Xxxxx123!");
 
-		LoginResponse? loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>();
-    }
+		//HttpResponseMessage registerResponse = await Http.PostAsJsonAsync<RegistrationRequest>(Routes.Identity.Register, new RegistrationRequest {
+		//	Login			= login,
+		//	Password		= password,
+		//	PasswordVerify	= password,
+		//	Email			= "test@test.org"
+		//});
+
+		//registerResponseStr = $"{(int)registerResponse.StatusCode} ({registerResponse.StatusCode})     {await registerResponse.Content.ReadAsStringAsync()}";
+
+		//HttpResponseMessage loginResponse = await Http.PostAsJsonAsync<LoginRequest>(Routes.Identity.Login, new RegistrationRequest {
+		//	Login		= login,
+		//	Password	= password
+		//});
+
+		//loginResponseStr = $"{(int)loginResponse.StatusCode} ({loginResponse.StatusCode})      {await loginResponse.Content.ReadAsStringAsync()}";
+	}
 }

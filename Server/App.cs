@@ -1,16 +1,18 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using FluentValidation;
 using BlazorTemplate.Shared.Contracts;
 using BlazorTemplate.Server.Services;
 using BlazorTemplate.Server.Data;
+using FluentValidation.AspNetCore;
+
 
 namespace BlazorTemplate.Server;
 
@@ -29,9 +31,9 @@ internal class App
 			.Get<Config>();
 
 		builder.Services
-			.AddScoped<IdentityService>();
-		builder.Services
 			.AddControllers();
+		builder.Services
+			.AddFluentValidationAutoValidation();
 		//builder.Services.AddControllersWithViews();
 		//builder.Services.AddRazorPages();
 		builder.Services
@@ -39,7 +41,7 @@ internal class App
 				options.UseSqlite(Config.Database.SQLite);
 			});
 		builder.Services
-			.AddIdentity<IdentityUser, IdentityRole>()
+			.AddIdentity<IdentityUserEx, IdentityRole>()
 			.AddEntityFrameworkStores<SQLiteDBContext>();
 		builder.Services
 			.AddAuthentication(options => {
@@ -49,27 +51,48 @@ internal class App
 			})
 			.AddJwtBearer(options => {
 				options.SaveToken					= true;
-				options.TokenValidationParameters	= new TokenValidationParameters {
-					RequireExpirationTime		= true,
-					ValidateLifetime			= true,
-					ValidateAudience			= true,
-					ValidateIssuer				= true,
-					ValidateIssuerSigningKey	= true,
-					IssuerSigningKey			= new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Config.JWT.SecretKey))
-				};
+				options.TokenValidationParameters	= IdentityService.TokenValidationParameters;
+				//options.Events						= new JwtBearerEvents {
+				//	OnAuthenticationFailed = context => {
+				//		context.
+				//	}
+				//};
 			});
 		builder.Services
 			.AddValidatorsFromAssemblyContaining<RegistrationRequest>();
+
+		builder.Services
+			.AddScoped<IdentityService>();
 
 
 
 		WebApplication? app = builder.Build();
 
+		app.Use(async (context, next) => {
+			try
+			{
+				await next(context);
+			}
+			catch(Exception ex)
+			{
+				int statusCode = ex switch {
+					ArgumentException			=> StatusCodes.Status400BadRequest,
+					UnauthorizedAccessException	=> StatusCodes.Status401Unauthorized,
+					MemberAccessException		=> StatusCodes.Status403Forbidden,
+					_							=> StatusCodes.Status500InternalServerError
+				};
+
+				context.Response.ContentType	= "application/json";
+				context.Response.StatusCode		= statusCode;
+				await context.Response.WriteAsync(ex.Message);
+			}
+		});
+
 		if(app.Environment.IsDevelopment())
 			app.UseWebAssemblyDebugging();
 		else
 		{
-			app.UseExceptionHandler("/Error");
+			//app.UseExceptionHandler("/Error");
 			app.UseHsts(); // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 			app.UseHttpsRedirection();
 		}

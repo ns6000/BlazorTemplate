@@ -5,13 +5,16 @@ internal class DatabaseSettings
 
 internal class JWTSettings
 {
+	public string Domain					{ get; init; } = "/";
 	public string? SecretKey				{ get; init; }
-	public ushort ExpiresAfterMin			{ get; init; } = 60;
+	public ushort TokenLifetimeSec			{ get; init; } = 600;
+	public ushort RefreshTokenLifetimeHours	{ get; init; } = 10;
+	public ushort RefreshTokenSize			{ get; init; } = 64;
 }
 
 internal class Config
 {
 	public DatabaseSettings Database		{ get; init; } = new();
 	public JWTSettings JWT					{ get; init; } = new();
-	public string AllowedHosts				{ get; init; } = "";
+	public string AllowedHosts				{ get; init; } = "*";
 }

@@ -24,6 +24,7 @@ public class WeatherForecastController : ControllerBase
 	public WeatherForecastController(ILogger<WeatherForecastController> logger) => _logger = logger;
 
 	[HttpGet]
+	[Authorize]
 	public IEnumerable<WeatherForecast> Get() =>
 		Enumerable
 			.Range(1, 5)
