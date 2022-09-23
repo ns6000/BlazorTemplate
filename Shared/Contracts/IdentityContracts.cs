@@ -20,13 +20,6 @@ public class LoginRequestValidator<T> : AbstractValidator<T> where T : LoginRequ
 	}
 }
 
-public class LoginResponse
-{
-	public bool Success						{ get; set; }
-	public string[] Errors					{ get; set; } = Array.Empty<string>();
-	public string? Token					{ get; set; }
-}
-
 
 
 public class RegistrationRequest : LoginRequest

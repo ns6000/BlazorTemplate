@@ -4,13 +4,14 @@ using BlazorTemplate.Shared.Contracts;
 using BlazorTemplate.Server.Services;
 using Microsoft.AspNetCore.Http;
 
+
 namespace BlazorTemplate.Server.Controllers;
 
 [ApiController]
 public class IdentityController : ControllerBase
 {
-	public const string refreshTokenCookieName = "refreshToken";
-	public readonly IdentityService identityService;
+	private const string refreshTokenCookieName = "refreshToken";
+	private readonly IdentityService identityService;
 
 	public IdentityController(IdentityService identityService) =>
 		this.identityService = identityService;
@@ -45,8 +46,7 @@ public class IdentityController : ControllerBase
 	[HttpPost(Routes.Identity.Logout)]
 	public async Task<IActionResult> Logout()
 	{
-		string? refreshToken = Request.Cookies[refreshTokenCookieName];
-		if(refreshToken is null)
+		if(Request.Cookies[refreshTokenCookieName] is not string refreshToken)
 			throw new UnauthorizedAccessException();
 
 		await identityService.RevokeRefreshTokenAsync(refreshToken);
@@ -57,8 +57,7 @@ public class IdentityController : ControllerBase
 	[HttpPost(Routes.Identity.Refresh)]
 	public async Task<IActionResult> Refresh()
 	{
-		string? refreshToken = Request.Cookies[refreshTokenCookieName];
-		if(refreshToken is null)
+		if(Request.Cookies[refreshTokenCookieName] is not string refreshToken)
 			throw new UnauthorizedAccessException();
 
 		IdentityTokens identityTokens = await identityService.RefreshTokenAsync(refreshToken);

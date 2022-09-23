@@ -52,11 +52,6 @@ internal class App
 			.AddJwtBearer(options => {
 				options.SaveToken					= true;
 				options.TokenValidationParameters	= IdentityService.TokenValidationParameters;
-				//options.Events						= new JwtBearerEvents {
-				//	OnAuthenticationFailed = context => {
-				//		context.
-				//	}
-				//};
 			});
 		builder.Services
 			.AddValidatorsFromAssemblyContaining<RegistrationRequest>();
