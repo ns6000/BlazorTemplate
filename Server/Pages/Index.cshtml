@@ -1,3 +1,6 @@
+﻿@page
+@using BlazorTemplate.Shared.Resources
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -78,8 +81,8 @@
 
 							progressBar.style.width = `${percentLoaded}%`;
 							progressLabel.innerText = percentLoaded === 100
-								? 'Starting'
-								: `Downloading ${loadedCount} / ${totalCount}: ${fileName}`;
+								? '@Test.AplikaceSeSpousti'
+								: `@Test.Stahovani ${loadedCount} / ${totalCount}: ${fileName}`;
 						});
 
 						return fetchResources;

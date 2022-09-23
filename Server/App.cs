@@ -35,7 +35,7 @@ internal class App
 		builder.Services
 			.AddFluentValidationAutoValidation();
 		//builder.Services.AddControllersWithViews();
-		//builder.Services.AddRazorPages();
+		builder.Services.AddRazorPages();
 		builder.Services
 			.AddDbContext<SQLiteDBContext>(options => {
 				options.UseSqlite(Config.Database.SQLite);
@@ -97,9 +97,9 @@ internal class App
 		app.UseAuthentication();
 		app.UseRouting();
 		app.UseAuthorization();
-		//app.MapRazorPages();
+		app.MapRazorPages();
 		app.MapControllers();
-		app.MapFallbackToFile("index.html");
+		app.MapFallbackToPage("/Index"); //app.MapFallbackToFile("index.html");
 
 		await app
 			.RunAsync();
