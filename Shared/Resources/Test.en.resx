@@ -117,13 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AplikaceSeSpousti" xml:space="preserve">
+  <data name="AppIsStarting" xml:space="preserve">
     <value>App is starting</value>
   </data>
-  <data name="HelloWorld" xml:space="preserve">
-    <value>Hello world!</value>
-  </data>
-  <data name="Stahovani" xml:space="preserve">
+  <data name="Downloading" xml:space="preserve">
     <value>Downloading</value>
+  </data>
+  <data name="HelloWorld" xml:space="preserve">
+    <value>Hello World!</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading</value>
+  </data>
+  <data name="StartingFromCache" xml:space="preserve">
+    <value>Starting from cache</value>
+  </data>
+  <data name="WrongLoginPassword" xml:space="preserve">
+    <value>Wrong login or password</value>
   </data>
 </root>

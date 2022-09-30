@@ -1,20 +1,15 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Identity;
-using BlazorTemplate.Server.Data;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using BlazorTemplate.Server.Data;
 
 
 namespace BlazorTemplate.Server.Services;
 
 public record IdentityTokens(string AccessToken, string RefreshToken);
-
-public struct JwtCustomClaimNames
-{
-	public const string Id = "id";
-}
 
 public class IdentityService
 {
@@ -36,24 +31,28 @@ public class IdentityService
 	public IdentityService(UserManager<IdentityUserEx> userManager) =>
 		this.userManager = userManager;
 
-	private static string CreateAccessToken(IdentityUserEx user)
+	private async Task<string> CreateAccessTokenAsync(IdentityUserEx user)
 	{
+		IList<string> roles	= await userManager.GetRolesAsync(user);
+		List<Claim> claims	= new() {
+			new Claim(JwtCustomClaimNames.Id,					user.Id),
+			new Claim(JwtRegisteredClaimNames.Sub,				user.UserName),
+			new Claim(JwtRegisteredClaimNames.Email,			user.Email)
+		};
+		foreach(string role in roles)
+			claims.Add(new Claim(JwtCustomClaimNames.Role,		role));
+
 		JwtSecurityTokenHandler tokenHandler	= new();
 		SecurityToken token						= tokenHandler.CreateToken(new SecurityTokenDescriptor {
 			Expires				= DateTime.UtcNow.AddSeconds(App.Config.JWT.TokenLifetimeSec),
 			SigningCredentials	= new SigningCredentials(symetricSecurityKey, signingAlgorithm),
-			Subject				= new ClaimsIdentity(new [] {
-				new Claim(JwtCustomClaimNames.Id,			user.Id),
-				new Claim(JwtRegisteredClaimNames.Sub,		user.UserName),
-				new Claim(JwtRegisteredClaimNames.Email,	user.Email),
-				new Claim(JwtRegisteredClaimNames.Jti,		Guid.NewGuid().ToString())
-			})
+			Subject				= new ClaimsIdentity(claims)
 		});
 
 		return tokenHandler.WriteToken(token);
 	}
 
-	private async Task<string> CreateRefreshToken(IdentityUserEx user)
+	private async Task<string> CreateRefreshTokenAsync(IdentityUserEx user)
 	{
 		string? refreshToken = null;
 
@@ -65,7 +64,7 @@ public class IdentityService
 		}
 
 		user.RefreshToken				= refreshToken;
-		user.RefreshTokenExpirationUTC	= DateTime.UtcNow.AddHours(App.Config.JWT.RefreshTokenLifetimeHours);
+		user.RefreshTokenExpirationUTC	= DateTime.UtcNow.AddMinutes(2); //.AddHours(App.Config.JWT.RefreshTokenLifetimeHours);
 		await userManager.UpdateAsync(user);
 
 		return refreshToken;
@@ -78,7 +77,7 @@ public class IdentityService
 		await userManager.UpdateAsync(user);
 	}
 
-	public async Task RegisterAsync(string login, string password, string? email)
+	public async Task RegisterAsync(string login, string password, string? email = null, params string[] roles)
 	{
 		ArgumentNullException.ThrowIfNull(login);
 		ArgumentNullException.ThrowIfNull(password);
@@ -87,10 +86,14 @@ public class IdentityService
 		if(user is not null)
 			throw new ArgumentException($"User '{login}' already exists");
 
-		await userManager.CreateAsync(new IdentityUserEx {
+		user = new() {
 			UserName	= login,
 			Email		= string.IsNullOrEmpty(email) ? null : email.Trim()
-		}, password);
+		};
+
+		await userManager.CreateAsync(user, password);
+		foreach(string role in roles)
+			await userManager.AddToRoleAsync(user, role);
 	}
 
 	public async Task<IdentityTokens> LoginAsync(string login, string password)
@@ -107,8 +110,8 @@ public class IdentityService
 			throw new UnauthorizedAccessException($"Wrong password for user '{login}'");
 
 		return new IdentityTokens(
-			CreateAccessToken(user),
-			await CreateRefreshToken(user)
+			await CreateAccessTokenAsync(user),
+			await CreateRefreshTokenAsync(user)
 		);
 	}
 
@@ -130,8 +133,8 @@ public class IdentityService
 		}
 
 		return new IdentityTokens(
-			CreateAccessToken(user),
-			await CreateRefreshToken(user)
+			await CreateAccessTokenAsync(user),
+			await CreateRefreshTokenAsync(user)
 		);
 	}
 

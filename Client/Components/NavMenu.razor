@@ -24,9 +24,11 @@
 				<span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
 			</NavLink>
 		</div>
-	</nav>
 
-	<div class="mt-4 mx-2 text-light">@BlazorTemplate.Shared.Resources.Test.HelloWorld</div>
+		<div class="ms-2 mt-5">
+			<CultureSelector />
+		</div>
+	</nav>
 </div>
 
 @code {
@@ -34,8 +36,6 @@
 
 	private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-	private void ToggleNavMenu()
-	{
+	private void ToggleNavMenu() =>
 		collapseNavMenu = !collapseNavMenu;
-	}
 }

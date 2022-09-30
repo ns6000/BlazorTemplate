@@ -33,7 +33,7 @@ internal class App
 		builder.Services
 			.AddControllers();
 		builder.Services
-			.AddFluentValidationAutoValidation();
+			.AddFluentValidation(x => x.AutomaticValidationEnabled = true); //.AddFluentValidationAutoValidation();
 		//builder.Services.AddControllersWithViews();
 		builder.Services.AddRazorPages();
 		builder.Services
@@ -43,6 +43,10 @@ internal class App
 		builder.Services
 			.AddIdentity<IdentityUserEx, IdentityRole>()
 			.AddEntityFrameworkStores<SQLiteDBContext>();
+		builder.Services
+			.Configure<IdentityOptions>(options => {
+				options.Password.RequiredLength = 8;
+			});
 		builder.Services
 			.AddAuthentication(options => {
 				options.DefaultScheme				= JwtBearerDefaults.AuthenticationScheme;
@@ -62,6 +66,27 @@ internal class App
 
 
 		WebApplication? app = builder.Build();
+
+		if(Constants.DEBUG)
+		{
+			using IServiceScope scope = app.Services.CreateScope();
+			SQLiteDBContext dbContext = scope.ServiceProvider.GetRequiredService<SQLiteDBContext>();
+
+			if(!await dbContext.Roles.AnyAsync())
+			{
+				await dbContext.Roles.AddAsync(new IdentityRole {
+					Name			= Roles.Administrator,
+					NormalizedName	= Roles.Administrator.ToUpper(),
+				});
+
+				await dbContext.Roles.AddAsync(new IdentityRole {
+					Name			= Roles.User,
+					NormalizedName	= Roles.User.ToUpper(),
+				});
+
+				await dbContext.SaveChangesAsync();
+			}
+		}
 
 		app.Use(async (context, next) => {
 			try
@@ -99,7 +124,8 @@ internal class App
 		app.UseAuthorization();
 		app.MapRazorPages();
 		app.MapControllers();
-		app.MapFallbackToPage("/Index"); //app.MapFallbackToFile("index.html");
+		//app.MapFallbackToFile("index.html");
+		app.MapFallbackToPage("/BlazorBootstrapper");
 
 		await app
 			.RunAsync();

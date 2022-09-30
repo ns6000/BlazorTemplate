@@ -8,4 +8,4 @@ global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.Extensions.Logging;
 
-global using FluentValidation.Results;
+global using BlazorTemplate.Shared;

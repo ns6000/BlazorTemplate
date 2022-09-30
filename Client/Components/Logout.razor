@@ -1,0 +1,14 @@
+﻿@inject NavigationManager navigationManager
+@inject AuthenticationService authenticationService
+
+<button type="button" class="btn btn-sm btn-outline-primary ms-2" @onclick="OnLogout">
+	Logout
+</button>
+
+@code {
+	private async Task OnLogout()
+	{
+		await authenticationService.Logout();
+		navigationManager.NavigateTo("/");
+	}
+}

@@ -1,8 +1,6 @@
-using BlazorTemplate.Shared;
-using BlazorTemplate.Shared.Routes;
+using Microsoft.AspNetCore.Http;
 using BlazorTemplate.Shared.Contracts;
 using BlazorTemplate.Server.Services;
-using Microsoft.AspNetCore.Http;
 
 
 namespace BlazorTemplate.Server.Controllers;
@@ -31,7 +29,7 @@ public class IdentityController : ControllerBase
 	[HttpPost(Routes.Identity.Register)]
 	public async Task<IActionResult> Register([FromBody]RegistrationRequest request)
 	{
-		await identityService.RegisterAsync(request.Login!, request.Password!, request.Email);
+		await identityService.RegisterAsync(request.Login!, request.Password!, request.Email, request.Role!);
 		return Ok();
 	}
 

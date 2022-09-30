@@ -63,9 +63,18 @@ namespace BlazorTemplate.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Aplikace se spouští.
         /// </summary>
-        public static string AplikaceSeSpousti {
+        public static string AppIsStarting {
             get {
-                return ResourceManager.GetString("AplikaceSeSpousti", resourceCulture);
+                return ResourceManager.GetString("AppIsStarting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stahovani.
+        /// </summary>
+        public static string Downloading {
+            get {
+                return ResourceManager.GetString("Downloading", resourceCulture);
             }
         }
         
@@ -79,20 +88,38 @@ namespace BlazorTemplate.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hodnota neexistující v lokalizaci.
+        ///   Looks up a localized string similar to Načítání.
         /// </summary>
-        public static string Neexistujici {
+        public static string Loading {
             get {
-                return ResourceManager.GetString("Neexistujici", resourceCulture);
+                return ResourceManager.GetString("Loading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stahovani.
+        ///   Looks up a localized string similar to Hodnota neexistující v lokalizaci.
         /// </summary>
-        public static string Stahovani {
+        public static string NonexistentLocale {
             get {
-                return ResourceManager.GetString("Stahovani", resourceCulture);
+                return ResourceManager.GetString("NonexistentLocale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spouštění z mezipaměti.
+        /// </summary>
+        public static string StartingFromCache {
+            get {
+                return ResourceManager.GetString("StartingFromCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chybné jméno nebo heslo.
+        /// </summary>
+        public static string WrongLoginPassword {
+            get {
+                return ResourceManager.GetString("WrongLoginPassword", resourceCulture);
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿@page "/fetchdata"
-@inject HttpClient Http
+@inject HttpClient httpClient
 
 <PageTitle>Weather forecast</PageTitle>
 
@@ -40,32 +40,6 @@ else
 @code {
 	private WeatherForecast[]? forecasts = null;
 
-	protected override async Task OnInitializedAsync()
-	{
-		HttpResponseMessage loginResponse = await Http.PostAsJsonAsync<LoginRequest>(Routes.Identity.Login, new RegistrationRequest {
-			Login		= "test",
-			Password	= "Xxxxx123!"
-		});
-
-		Http.DefaultRequestHeaders.Authorization = new("Bearer", await loginResponse.Content.ReadAsStringAsync());
-		forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
-
-		//(string login, string password) = ("test", "Xxxxx123!");
-
-		//HttpResponseMessage registerResponse = await Http.PostAsJsonAsync<RegistrationRequest>(Routes.Identity.Register, new RegistrationRequest {
-		//	Login			= login,
-		//	Password		= password,
-		//	PasswordVerify	= password,
-		//	Email			= "test@test.org"
-		//});
-
-		//registerResponseStr = $"{(int)registerResponse.StatusCode} ({registerResponse.StatusCode})     {await registerResponse.Content.ReadAsStringAsync()}";
-
-		//HttpResponseMessage loginResponse = await Http.PostAsJsonAsync<LoginRequest>(Routes.Identity.Login, new RegistrationRequest {
-		//	Login		= login,
-		//	Password	= password
-		//});
-
-		//loginResponseStr = $"{(int)loginResponse.StatusCode} ({loginResponse.StatusCode})      {await loginResponse.Content.ReadAsStringAsync()}";
-	}
+	protected override async Task OnInitializedAsync() =>
+		forecasts = await httpClient.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
 }

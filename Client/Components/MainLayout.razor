@@ -1,24 +1,35 @@
 ﻿@inherits LayoutComponentBase
+@inject AppState appState
 
-<div class="page">
-	<div class="sidebar">
-		<NavMenu />
-	</div>
-
-	<main>
-		<div class="top-row px-4">
-			<a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+<AuthorizeView>
+	<Authorizing>
+		<div class="d-flex flex-row justify-content-center">
+			Authorizing...
 		</div>
+	</Authorizing>
 
-		<article class="content px-4">
+	<NotAuthorized>
+		<div class="d-flex flex-row justify-content-center">
 			@Body
-		</article>
-
-		<div class="bottom-row px-4">
-			<CultureSelector />
 		</div>
+	</NotAuthorized>
 
-		<div class="mt-4">@BlazorTemplate.Shared.Resources.Test.HelloWorld</div>
-		<div class="mt-4">@BlazorTemplate.Shared.Resources.Test.Neexistujici</div>
-	</main>
-</div>
+	<Authorized>
+		<div class="page">
+			<div class="sidebar">
+				<NavMenu />
+			</div>
+
+			<main>
+				<div class="top-row px-4">
+					@appState.AccessToken?.Subject
+					<Logout />
+				</div>
+
+				<article class="content px-4">
+					@Body
+				</article>
+			</main>
+		</div>
+	</Authorized>
+</AuthorizeView>

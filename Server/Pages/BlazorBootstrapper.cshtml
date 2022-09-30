@@ -1,9 +1,12 @@
 ﻿@page
+@model BlazorBootstrapperModel
 @using BlazorTemplate.Shared.Resources
+@using BlazorTemplate.Server.Pages
+
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="@Model.Language">
 	<head>
 		<title>Blazor Template</title>
 
@@ -22,16 +25,16 @@
 	<body>
 		<div id="app">
 			<div class="d-flex flex-column justify-content-center align-items-center min-vh-100">
-				<div class="card w-25">
+				<div class="card w-25 rounded-4">
 					<div class="card-body">
 						<div class="card-title fw-bolder">
-							Loading...
+							@Test.Loading...
 						</div>
 						<div class="progress my-1" role="progressbar" style="height: 4px;">
 							<div id="progressBar" class="progress-bar" style="width: 10%;"></div>
 						</div>
 						<div id="progressLabel" class="text-muted text-truncate small">
-							Starting from cache
+							@Test.StartingFromCache
 						</div>
 					</div>
 				</div>
@@ -81,8 +84,8 @@
 
 							progressBar.style.width = `${percentLoaded}%`;
 							progressLabel.innerText = percentLoaded === 100
-								? '@Test.AplikaceSeSpousti'
-								: `@Test.Stahovani ${loadedCount} / ${totalCount}: ${fileName}`;
+								? '@Html.Raw(Test.AppIsStarting)'
+								: `@Html.Raw(Test.Downloading) ${loadedCount} / ${totalCount}: ${fileName}`;
 						});
 
 						return fetchResources;
