@@ -452,3 +452,6 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+Server/Data/SQLite.db
+Server/Data/SQLite.db-shm
+Server/Data/SQLite.db-wal

@@ -64,7 +64,7 @@ public class IdentityService
 		}
 
 		user.RefreshToken				= refreshToken;
-		user.RefreshTokenExpirationUTC	= DateTime.UtcNow.AddMinutes(2); //.AddHours(App.Config.JWT.RefreshTokenLifetimeHours);
+		user.RefreshTokenExpirationUTC	= DateTime.UtcNow.AddHours(App.Config.JWT.RefreshTokenLifetimeHours);
 		await userManager.UpdateAsync(user);
 
 		return refreshToken;

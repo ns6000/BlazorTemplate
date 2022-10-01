@@ -51,7 +51,7 @@ public class AuthenticationService
 		try
 		{
 			await httpClient.PostAsync(Routes.Identity.Logout, null);
-			appState.AccessToken = null;
+			appState.ClearState();
 
 			((JWTAuthStateProvider)authStateProvider).NotifyUserAuthentication();
 		}

@@ -1,0 +1,19 @@
+﻿@attribute [AllowAnonymous]
+@inject AuthenticationService authenticationService
+@inject NavigationManager navigationManager
+@inject AppState appState
+
+
+@code {
+	protected override async Task OnInitializedAsync()
+	{
+		if(appState.AccessToken is null)
+			await authenticationService.Refresh();
+
+		if(appState.AccessToken is null)
+		{
+			appState.ClearState();
+			navigationManager.NavigateTo("/login");
+		}
+	}
+}
