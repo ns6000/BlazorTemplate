@@ -1,13 +1,13 @@
 namespace BlazorTemplate.Shared;
 
-public struct Routes
+public struct ApiRoutes
 {
 	private const string Root			= "api";
 	private const string Version		= "v1";
 	private const string Base			= $"{Root}/{Version}";
 
 	public static bool PointsToIdentity(string? url) =>
-		url is not null && url.Contains($"{Base}/identity/", StringComparison.InvariantCultureIgnoreCase);
+		url?.Contains($"{Base}/identity/", StringComparison.InvariantCultureIgnoreCase) ?? false;
 
 	public struct Identity
 	{

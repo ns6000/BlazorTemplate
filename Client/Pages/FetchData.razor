@@ -1,4 +1,4 @@
-﻿@page "/fetchdata"
+﻿@attribute [Route(Routes.FetchData)]
 @inject HttpClient httpClient
 
 
@@ -24,7 +24,7 @@ else
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var forecast in forecasts)
+			@foreach(WeatherForecast forecast in forecasts)
 			{
 				<tr>
 					<td>@forecast.Date.ToShortDateString()</td>

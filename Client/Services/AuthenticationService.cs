@@ -32,7 +32,7 @@ public class AuthenticationService
 	{
 		try
 		{
-			HttpResponseMessage response = await httpClient.PostAsJsonAsync(Routes.Identity.Login, loginRequest);
+			HttpResponseMessage response = await httpClient.PostAsJsonAsync(ApiRoutes.Identity.Login, loginRequest);
 			if(!response.IsSuccessStatusCode)
 				throw new Exception($"Login failed with {(int)response.StatusCode} ({response.StatusCode})");
 
@@ -50,7 +50,7 @@ public class AuthenticationService
 	{
 		try
 		{
-			await httpClient.PostAsync(Routes.Identity.Logout, null);
+			await httpClient.PostAsync(ApiRoutes.Identity.Logout, null);
 			appState.ClearState();
 
 			((JWTAuthStateProvider)authStateProvider).NotifyUserAuthentication();
@@ -64,7 +64,7 @@ public class AuthenticationService
 	{
 		try
 		{
-			HttpResponseMessage response = await httpClient.PostAsync(Routes.Identity.Refresh, null);
+			HttpResponseMessage response = await httpClient.PostAsync(ApiRoutes.Identity.Refresh, null);
 			if(!response.IsSuccessStatusCode)
 				throw new Exception($"Refresh failed with {(int)response.StatusCode} ({response.StatusCode})");
 
