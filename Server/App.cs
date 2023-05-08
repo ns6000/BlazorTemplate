@@ -28,17 +28,19 @@ internal class App
 			.AddJsonFile("appsettings.json")
 			.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
 			.Build()
-			.Get<Config>();
+			.Get<Config>()!;
 
 		builder.Services
 			.AddControllers();
 		builder.Services
-			.AddFluentValidation(x => x.AutomaticValidationEnabled = true); //.AddFluentValidationAutoValidation();
+			.AddFluentValidationAutoValidation()
+			.AddFluentValidationClientsideAdapters();
+			//.AddFluentValidation(x => x.AutomaticValidationEnabled = true); //.AddFluentValidationAutoValidation();
 		//builder.Services.AddControllersWithViews();
 		builder.Services.AddRazorPages();
 		builder.Services
 			.AddDbContext<SQLiteDBContext>(options => {
-				options.UseSqlite(Config.Database.SQLite);
+				options.UseSqlite(Config!.Database.SQLite);
 			});
 		builder.Services
 			.AddIdentity<IdentityUserEx, IdentityRole>()

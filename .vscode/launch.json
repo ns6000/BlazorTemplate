@@ -10,7 +10,7 @@
 			"hosted":			true,
 			"preLaunchTask":	"build",
 			"cwd":				"${workspaceFolder}",
-			"program":			"${workspaceFolder}/Server/bin/Debug/net6.0/BlazorTemplate.Server.dll",
+			"program":			"${workspaceFolder}/Server/bin/Debug/net7.0/BlazorTemplate.Server.dll",
 			"url":				"http://localhost:5000"
 		},
 		{

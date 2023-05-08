@@ -14,7 +14,7 @@ public record IdentityTokens(string AccessToken, string RefreshToken);
 public class IdentityService
 {
 	private static readonly string signingAlgorithm						= SecurityAlgorithms.HmacSha256Signature;
-	private static readonly SymmetricSecurityKey symetricSecurityKey	= new(Encoding.ASCII.GetBytes(App.Config.JWT.SecretKey));
+	private static readonly SymmetricSecurityKey symetricSecurityKey	= new(Encoding.ASCII.GetBytes(App.Config.JWT.SecretKey!));
 	private readonly UserManager<IdentityUserEx> userManager;
 
 	public static TokenValidationParameters TokenValidationParameters { get => new() {
@@ -36,8 +36,8 @@ public class IdentityService
 		IList<string> roles	= await userManager.GetRolesAsync(user);
 		List<Claim> claims	= new() {
 			new Claim(JwtCustomClaimNames.Id,					user.Id),
-			new Claim(JwtRegisteredClaimNames.Sub,				user.UserName),
-			new Claim(JwtRegisteredClaimNames.Email,			user.Email)
+			new Claim(JwtRegisteredClaimNames.Sub,				user.UserName!),
+			new Claim(JwtRegisteredClaimNames.Email,			user.Email!)
 		};
 		foreach(string role in roles)
 			claims.Add(new Claim(JwtCustomClaimNames.Role,		role));
@@ -82,7 +82,7 @@ public class IdentityService
 		ArgumentNullException.ThrowIfNull(login);
 		ArgumentNullException.ThrowIfNull(password);
 
-		IdentityUserEx user = await userManager.FindByNameAsync(login);
+		IdentityUserEx? user = await userManager.FindByNameAsync(login);
 		if(user is not null)
 			throw new ArgumentException($"User '{login}' already exists");
 
@@ -101,7 +101,7 @@ public class IdentityService
 		ArgumentNullException.ThrowIfNull(login);
 		ArgumentNullException.ThrowIfNull(password);
 
-		IdentityUserEx user = await userManager.FindByNameAsync(login);
+		IdentityUserEx? user = await userManager.FindByNameAsync(login);
 		if(user is null)
 			throw new UnauthorizedAccessException($"User '{login}' does not exists");
 
