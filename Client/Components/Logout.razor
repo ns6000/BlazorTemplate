@@ -9,6 +9,6 @@
 	private async Task OnLogout()
 	{
 		await authenticationService.Logout();
-		navigationManager.NavigateTo("/login");
+		navigationManager.NavigateTo(Routes.Login);
 	}
 }

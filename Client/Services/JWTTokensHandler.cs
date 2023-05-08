@@ -22,7 +22,7 @@ public class JWTTokensHandler : DelegatingHandler
 		if(appState.AccessToken is not null)
 			request.Headers.Authorization = new("Bearer", appState.AccessToken.RawData);
 
-		if(!Routes.PointsToIdentity(request.RequestUri?.OriginalString))
+		if(!ApiRoutes.PointsToIdentity(request.RequestUri?.OriginalString))
 		{
 			AuthenticationState authState	= await authStateProvider.GetAuthenticationStateAsync();
 			Claim? expirationClaim			= authState.User.FindFirst(claim => claim.Type.Equals(JwtRegisteredClaimNames.Exp, StringComparison.InvariantCultureIgnoreCase));
@@ -34,7 +34,7 @@ public class JWTTokensHandler : DelegatingHandler
 
 				if(timeToExpiry.TotalSeconds < 60)
 				{
-					HttpRequestMessage refreshRequest	= new(HttpMethod.Post, Routes.Identity.Refresh);
+					HttpRequestMessage refreshRequest	= new(HttpMethod.Post, ApiRoutes.Identity.Refresh);
 					HttpResponseMessage refreshResponse	= await base.SendAsync(refreshRequest, cancellationToken);
 
 					if(refreshResponse.IsSuccessStatusCode)

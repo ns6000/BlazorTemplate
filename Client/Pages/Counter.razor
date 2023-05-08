@@ -1,4 +1,4 @@
-﻿@page "/counter"
+﻿@attribute [Route(Routes.Counter)]
 @implements IDisposable
 @inject AppState appState
 
@@ -14,11 +14,11 @@
 
 @code {
 	protected override void OnInitialized() =>
-        appState.OnChange += StateHasChanged;
+		appState.OnChange += StateHasChanged;
 
-    private void IncrementCount() =>
-        appState.Counter++;
+	private void IncrementCount() =>
+		appState.Counter++;
 
 	public void Dispose() =>
-        appState.OnChange -= StateHasChanged;
+		appState.OnChange -= StateHasChanged;
 }

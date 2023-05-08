@@ -1,4 +1,4 @@
-﻿@page "/login"
+﻿@attribute [Route(Routes.Login)]
 @attribute [AllowAnonymous]
 @inject NavigationManager navigationManager
 @inject AuthenticationService authenticationService
@@ -42,7 +42,7 @@
 	private LoginRequest loginRequest	= new();
 
 	private async Task OnRegister() =>
-		await tempHttpClient.PostAsJsonAsync<RegistrationRequest>(Routes.Identity.Register, new RegistrationRequest {
+		await tempHttpClient.PostAsJsonAsync<RegistrationRequest>(ApiRoutes.Identity.Register, new RegistrationRequest {
 			Login			= "test",
 			Password		= "Xxxxx123!",
 			PasswordVerify	= "Xxxxx123!",
@@ -53,7 +53,7 @@
 	private async Task OnLogin()
 	{
 		if(await authenticationService.Login(loginRequest))
-			navigationManager.NavigateTo("/");
+			navigationManager.NavigateTo(Routes.Index);
 		else error = Test.WrongLoginPassword;
 	}
 }

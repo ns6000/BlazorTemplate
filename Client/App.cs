@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.JSInterop;
 using BlazorTemplate.Client;
 using BlazorTemplate.Client.Services;
+using BlazorTemplate.Shared;
 
 
 WebAssemblyHostBuilder? builder = WebAssemblyHostBuilder.CreateDefault(args);

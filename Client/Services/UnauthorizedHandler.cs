@@ -20,10 +20,10 @@ public class UnauthorizedHandler : DelegatingHandler
 	{
 		HttpResponseMessage response = await base.SendAsync(request, cancellationToken);
 
-		if(response.StatusCode == HttpStatusCode.Unauthorized && !Routes.PointsToIdentity(request.RequestUri?.OriginalString))
+		if(response.StatusCode == HttpStatusCode.Unauthorized && !ApiRoutes.PointsToIdentity(request.RequestUri?.OriginalString))
 		{
 			appState.ClearState();
-			navigationManager.NavigateTo("/login");
+			navigationManager.NavigateTo(Routes.Login);
 		}
 
 		return response;

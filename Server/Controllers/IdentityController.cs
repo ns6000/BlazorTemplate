@@ -26,14 +26,14 @@ public class IdentityController : ControllerBase
 #if !DEBUG
 	[Authorize]
 #endif
-	[HttpPost(Routes.Identity.Register)]
+	[HttpPost(ApiRoutes.Identity.Register)]
 	public async Task<IActionResult> Register([FromBody]RegistrationRequest request)
 	{
 		await identityService.RegisterAsync(request.Login!, request.Password!, request.Email, request.Role!);
 		return Ok();
 	}
 
-	[HttpPost(Routes.Identity.Login)]
+	[HttpPost(ApiRoutes.Identity.Login)]
 	public async Task<IActionResult> Login([FromBody]LoginRequest request)
 	{
 		IdentityTokens identityTokens = await identityService.LoginAsync(request.Login!, request.Password!);
@@ -41,7 +41,7 @@ public class IdentityController : ControllerBase
 		return Ok(identityTokens.AccessToken);
 	}
 
-	[HttpPost(Routes.Identity.Logout)]
+	[HttpPost(ApiRoutes.Identity.Logout)]
 	public async Task<IActionResult> Logout()
 	{
 		if(Request.Cookies[refreshTokenCookieName] is not string refreshToken)
@@ -52,7 +52,7 @@ public class IdentityController : ControllerBase
 		return Ok();
 	}
 
-	[HttpPost(Routes.Identity.Refresh)]
+	[HttpPost(ApiRoutes.Identity.Refresh)]
 	public async Task<IActionResult> Refresh()
 	{
 		if(Request.Cookies[refreshTokenCookieName] is not string refreshToken)
